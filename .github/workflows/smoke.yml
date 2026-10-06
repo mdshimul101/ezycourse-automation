@@ -23,6 +23,14 @@ jobs:
       BASE_URL: ${{ vars.BASE_URL }}
 
     steps:
+      - name: Check required settings
+        run: |
+          if [ -z "$BASE_URL" ]; then
+            echo "::error::BASE_URL is empty. Add it under Settings → Secrets and variables → Actions → Variables."
+            exit 1
+          fi
+          echo "::notice::BASE_URL is set to $BASE_URL"
+
       - name: Check out code
         uses: actions/checkout@v5
 
