@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      BASE_URL: ${{ vars.BASE_URL }}
+      BASE_URL: ${{ vars.BASE_URL || 'https://mdshimul.ezycourse.com' }}
 
     steps:
       - name: Check required settings
@@ -29,7 +29,7 @@ jobs:
             echo "::error::BASE_URL is empty. Add it under Settings → Secrets and variables → Actions → Variables."
             exit 1
           fi
-          echo "::notice::BASE_URL is set to $BASE_URL"
+          echo "::notice::BASE_URL is set to $BASE_URL (from ${{ vars.BASE_URL && 'repository variable' || 'workflow default' }})"
 
       - name: Check out code
         uses: actions/checkout@v5
