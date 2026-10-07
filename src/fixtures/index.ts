@@ -5,6 +5,7 @@ import { DashboardPage } from '@pages/DashboardPage';
 import { LoginPage } from '@pages/LoginPage';
 import { SignupPage } from '@pages/SignupPage';
 import { StudentsPage } from '@pages/StudentsPage';
+import { TagsPage } from '@pages/TagsPage';
 
 type Fixtures = {
   loginPage: LoginPage;
@@ -12,6 +13,8 @@ type Fixtures = {
   dashboardPage: DashboardPage;
   courseCategoriesPage: CourseCategoriesPage;
   studentsPage: StudentsPage;
+  tagsPage: TagsPage;
+  cleanupTag: (name: string) => void;
   guestPage: Page;
   guestSignupPage: SignupPage;
   cleanupStudent: (email: string) => void;
@@ -37,6 +40,20 @@ export const test = base.extend<Fixtures>({
   },
   studentsPage: async ({ page }, use) => {
     await use(new StudentsPage(page));
+  },
+  tagsPage: async ({ page }, use) => {
+    await use(new TagsPage(page));
+  },
+
+  /** Call `cleanupTag(name)` for every tag a test creates (or renames to); it is deleted after the test. */
+  cleanupTag: async ({ tagsPage }, use) => {
+    const names: string[] = [];
+    await use((name) => {
+      names.push(name);
+    });
+    for (const name of names) {
+      await tagsPage.deleteIfExists(name);
+    }
   },
 
   /** A logged-out browser tab, separate from the test's own `page` (which may be logged in as admin). */
