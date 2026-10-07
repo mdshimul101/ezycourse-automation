@@ -12,6 +12,7 @@ export class DashboardPage {
   }
 
   async goto(): Promise<void> {
-    await this.page.goto('/dashboard');
+    await this.page.goto('/dashboard', { waitUntil: 'domcontentloaded' });
+    await this.heading.waitFor();
   }
 }

@@ -18,7 +18,7 @@ export class CourseCategoriesPage {
   }
 
   async goto(): Promise<void> {
-    await this.page.goto('/dashboard/category');
+    await this.page.goto('/dashboard/category', { waitUntil: 'domcontentloaded' });
     await this.heading.waitFor();
   }
 
