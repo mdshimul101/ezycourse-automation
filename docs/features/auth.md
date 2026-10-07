@@ -20,10 +20,10 @@
 |---|---|---|
 | Login page shows the sign-in form | ✅ `@smoke` | `tests/e2e/auth/login.spec.ts` |
 | Invalid credentials show "Invalid credentials" | ✅ | `tests/e2e/auth/login.spec.ts` |
-| New student can sign up and lands on the student dashboard | ✅ | `tests/e2e/auth/signup.spec.ts` |
+| New student can sign up and lands on the student dashboard | ✅ | `tests/e2e/admin/student-signup.spec.ts` |
 | Empty signup form shows an error for every field | ✅ | `tests/e2e/auth/signup.spec.ts` |
 | Password shorter than 6 characters is rejected | ✅ | `tests/e2e/auth/signup.spec.ts` |
-| Existing email is rejected ("This email already exists") | ✅ | `tests/e2e/auth/signup.spec.ts` |
+| Existing email is rejected ("This email already exists") | ✅ | `tests/e2e/admin/student-signup.spec.ts` |
 | Admin logs in once; session reused by admin tests | ✅ | `tests/setup/auth.setup.ts` |
 | Forgot password link opens the reset page | ⬜ Practice task | |
 | First name with 1 character is rejected | ⬜ Practice task | |
@@ -32,9 +32,12 @@
 
 - Admin credentials come from `.env` (`TEST_USER_EMAIL`, `TEST_USER_PASSWORD`), never from code.
 - Negative login tests use a fake account (`not-a-real-user@example.com`) so the real account is never locked out.
-- Signup creates real students named `Auto Student` with `auto.signup.<unique>@example.com` emails.
-  **There is no automatic cleanup yet** — delete them in admin → Students (search `auto.signup`).
-  Planned fix: the Students feature tests will delete them.
+- Validation tests (`tests/e2e/auth/signup.spec.ts`) never create an account, so they run as a guest with no cleanup.
+- Tests that create a student (`tests/e2e/admin/student-signup.spec.ts`) sign up in a logged-out browser (`guestSignupPage`)
+  and register the email with `cleanupStudent(email)`. After the test the admin session permanently deletes it.
+  They live in `admin/` because the cleanup needs the admin session.
+- Created students are named `Auto Student` with `auto.signup.<unique>@example.com` emails.
+  On 2026-10-07 all older leftovers were deleted; only real students remain.
 - The saved admin session (`playwright/.auth/admin.json`) is git-ignored; it works like a password.
 
 ## Quirks & bugs found

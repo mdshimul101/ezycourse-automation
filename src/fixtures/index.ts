@@ -1,4 +1,4 @@
-import { test as base } from '@playwright/test';
+import { test as base, type Page } from '@playwright/test';
 import { buildNewStudent, type NewStudent } from '@data/students';
 import { CourseCategoriesPage } from '@pages/CourseCategoriesPage';
 import { DashboardPage } from '@pages/DashboardPage';
@@ -12,6 +12,9 @@ type Fixtures = {
   dashboardPage: DashboardPage;
   courseCategoriesPage: CourseCategoriesPage;
   studentsPage: StudentsPage;
+  guestPage: Page;
+  guestSignupPage: SignupPage;
+  cleanupStudent: (email: string) => void;
   signedUpStudent: NewStudent;
 };
 
@@ -36,26 +39,39 @@ export const test = base.extend<Fixtures>({
     await use(new StudentsPage(page));
   },
 
+  /** A logged-out browser tab, separate from the test's own `page` (which may be logged in as admin). */
+  guestPage: async ({ browser }, use) => {
+    const context = await browser.newContext({ storageState: { cookies: [], origins: [] } });
+    await use(await context.newPage());
+    await context.close();
+  },
+  guestSignupPage: async ({ guestPage }, use) => {
+    await use(new SignupPage(guestPage));
+  },
+
   /**
-   * A brand-new student who signed up through the real signup page.
-   * Signup happens in a separate, logged-out browser (the test's own page stays logged in as admin).
-   * After the test, the student is permanently deleted, even if the test failed.
-   * Use only in admin tests: the cleanup needs the admin session.
+   * Call `cleanupStudent(email)` for every student a test creates.
+   * After the test (even a failed one) each of them is permanently deleted.
+   * Admin tests only: the cleanup needs the admin session.
    */
-  signedUpStudent: async ({ browser, studentsPage }, use) => {
+  cleanupStudent: async ({ studentsPage }, use) => {
+    const emails: string[] = [];
+    await use((email) => {
+      emails.push(email);
+    });
+    for (const email of emails) {
+      await studentsPage.deleteIfExists(email);
+    }
+  },
+
+  /** A brand-new student who signed up through the real signup page. Deleted after the test. */
+  signedUpStudent: async ({ guestSignupPage, cleanupStudent }, use) => {
     const student = buildNewStudent();
-
-    const guestContext = await browser.newContext({ storageState: { cookies: [], origins: [] } });
-    const guestPage = await guestContext.newPage();
-    const signupPage = new SignupPage(guestPage);
-    await signupPage.goto();
-    await signupPage.signup(student);
-    await guestPage.waitForURL(/\/student\/dashboard/);
-    await guestContext.close();
-
+    cleanupStudent(student.email);
+    await guestSignupPage.goto();
+    await guestSignupPage.signup(student);
+    await guestSignupPage.page.waitForURL(/\/student\/dashboard/);
     await use(student);
-
-    await studentsPage.deleteIfExists(student.email);
   },
 });
 

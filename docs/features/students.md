@@ -29,12 +29,12 @@ Run: `npx playwright test --grep @students`
 
 ## Test data & cleanup
 
-- The `signedUpStudent` fixture signs up a brand-new student through the real signup page,
+- The `signedUpStudent` fixture signs up a brand-new student through the real signup page (via `guestSignupPage`),
   in a separate logged-out browser, and **permanently deletes the student after the test, even if it failed**.
 - Verified: after 4 runs, no students created by these tests were left behind.
 - Only ever delete students whose email starts with `auto.signup` and ends with `@example.com`.
   **Never touch real students** (e.g. "Test User Four", "Test User Five", "Etc. Etc.").
-- Older leftovers: the guest signup tests (`tests/e2e/auth/signup.spec.ts`) still create students without cleanup.
+- Signup tests that create accounts use the same cleanup (`cleanupStudent`); see [auth.md](auth.md).
 
 ## Quirks & bugs found
 
