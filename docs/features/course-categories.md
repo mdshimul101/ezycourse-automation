@@ -30,7 +30,7 @@ Run: `npx playwright test --grep @categories`
 ## Test data & cleanup
 
 - Every test creates its own category named `Auto Category <unique>`, so tests never collide when running in parallel.
-- `afterEach` deletes the test's category even if the test failed halfway (`deleteIfExists`).
+- Tests register every name they create (or rename to) with `cleanupCategory(name)`; each one is deleted after the test, even if the test failed halfway.
 - **Never touch "Test Category" (ID 6517)** — it existed before automation.
 - Verified: after `--repeat-each=3`, only "Test Category" remained.
 

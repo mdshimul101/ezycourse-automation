@@ -12,7 +12,8 @@ export default defineConfig({
 
   use: {
     baseURL: requireEnv('BASE_URL'),
-    trace: 'on-first-retry',
+    // Record every test, keep the recording only when it fails, so a random failure always leaves evidence.
+    trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
 

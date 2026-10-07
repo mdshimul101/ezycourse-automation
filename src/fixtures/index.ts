@@ -12,6 +12,7 @@ type Fixtures = {
   signupPage: SignupPage;
   dashboardPage: DashboardPage;
   courseCategoriesPage: CourseCategoriesPage;
+  cleanupCategory: (name: string) => void;
   studentsPage: StudentsPage;
   tagsPage: TagsPage;
   cleanupTag: (name: string) => void;
@@ -37,6 +38,17 @@ export const test = base.extend<Fixtures>({
   },
   courseCategoriesPage: async ({ page }, use) => {
     await use(new CourseCategoriesPage(page));
+  },
+
+  /** Call `cleanupCategory(name)` for every category a test creates (or renames to); it is deleted after the test. */
+  cleanupCategory: async ({ courseCategoriesPage }, use) => {
+    const names: string[] = [];
+    await use((name) => {
+      names.push(name);
+    });
+    for (const name of names) {
+      await courseCategoriesPage.deleteIfExists(name);
+    }
   },
   studentsPage: async ({ page }, use) => {
     await use(new StudentsPage(page));
