@@ -13,7 +13,7 @@ Test school: `BASE_URL` in `.env`. Admin area explored read-only on 2026-10-07:
 | — | Login & Signup (public) | Login form, invalid login, student signup + validation | ✅ Automated | [auth.md](features/auth.md) |
 | — | Admin login session | Log in once, reuse session for admin tests | ✅ Automated | [auth.md](features/auth.md) |
 | 1 | Course Categories | Create, rename, delete with cleanup | ✅ Automated | [course-categories.md](features/course-categories.md) |
-| 2 | Students | Signed-up student appears in admin, then delete (cleans up signup tests) | ⬜ Planned | |
+| 2 | Students | Signed-up student appears in admin; permanent delete with cleanup | ✅ Automated | [students.md](features/students.md) |
 | 3 | Tags, Blog Categories, Coupons | Same CRUD pattern as categories | ⬜ Planned | |
 | 4 | Courses | Create draft course → verify → delete | ⬜ Planned | |
 | 5 | Key admin pages | Read-only smoke: page loads and shows its heading | ⬜ Planned | |
