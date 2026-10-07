@@ -31,9 +31,19 @@ src/                 Reusable framework code (no tests here)
 └── utils/           Small helpers (env vars, random names, dates...)
 
 tests/               Test files only (*.spec.ts)
+├── setup/           auth.setup.ts: logs in once, saves the session to playwright/.auth/
 ├── e2e/             UI tests, grouped by feature: auth/, plans/, courses/...
+│   └── admin/       Tests that start logged in as admin (reuse the saved session)
 └── api/             API tests (added later)
 ```
+
+Playwright projects (see `playwright.config.ts`):
+
+| Project | Runs | Logged in? |
+|---|---|---|
+| `setup` | `tests/setup/*.setup.ts` | Creates the admin session |
+| `guest` | `tests/e2e/**` except `admin/` | No |
+| `admin` | `tests/e2e/admin/**` (runs after `setup`) | Yes, as admin |
 
 Imports use short aliases defined in `tsconfig.json`:
 `@fixtures`, `@pages/*`, `@data/*`, `@utils/*`.
