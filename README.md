@@ -21,6 +21,11 @@ cp .env.example .env   # then fill in real values
 | `npm run report` | Open the last HTML report |
 | `npm run typecheck` | Check TypeScript types without running tests |
 
+## Documentation
+
+- [`docs/coverage.md`](docs/coverage.md): every feature area, priority and automation status
+- [`docs/features/`](docs/features/): one file per automated feature (scenarios, test data, cleanup, bugs found)
+
 ## Folder structure
 
 ```text
