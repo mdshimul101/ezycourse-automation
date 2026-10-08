@@ -15,7 +15,8 @@ Test school: `BASE_URL` in `.env`. Admin area explored read-only on 2026-10-07:
 | 1 | Course Categories | Create, rename, delete with cleanup | ✅ Automated | [course-categories.md](features/course-categories.md) |
 | 2 | Students | Signed-up student appears in admin; permanent delete with cleanup | ✅ Automated | [students.md](features/students.md) |
 | 3a | Tags | Create, rename, delete with cleanup | ✅ Automated | [tags.md](features/tags.md) |
-| 3b | Blog Categories, Coupons | Same CRUD pattern | ⬜ Planned | |
+| 3b | Blog Categories | Create, rename, delete, required description, with cleanup | ✅ Automated | [blog-categories.md](features/blog-categories.md) |
+| 3c | Coupons | Full-page form (product, discount, duration, quantity, expiry); live discount codes | ⬜ Planned | |
 | 4 | Courses | Create draft course → verify → delete | ⬜ Planned | |
 | 5 | Key admin pages | Read-only smoke: page loads and shows its heading | ⬜ Planned | |
 | 6 | Orders, Checkout, Automation | Only with a test plan agreed with the lead | ⏸ Later | |

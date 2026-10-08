@@ -42,7 +42,7 @@ src/                         Reusable framework code (no tests here)
 
 tests/e2e/                   Test files only, one folder per feature
 ├── setup/auth.setup.ts      Logs in once, saves the session to playwright/.auth/
-├── login/  signup/  dashboard/  students/  course-categories/  tags/
+├── login/  signup/  dashboard/  students/  course-categories/  blog-categories/  tags/
 ```
 
 Playwright projects (see `playwright.config.ts`):

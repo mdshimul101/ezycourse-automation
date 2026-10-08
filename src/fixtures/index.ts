@@ -1,5 +1,7 @@
 import { test as base, type Page } from '@playwright/test';
 import { buildNewStudent, type NewStudent } from '@data/students';
+import { BlogCategoriesController } from '@pages/blog-categories/controllers/blog-categories.controller';
+import { BlogCategoriesLocator } from '@pages/blog-categories/locators/blog-categories.locator';
 import { CourseCategoriesController } from '@pages/course-categories/controllers/course-categories.controller';
 import { CourseCategoriesLocator } from '@pages/course-categories/locators/course-categories.locator';
 import { DashboardController } from '@pages/dashboard/controllers/dashboard.controller';
@@ -23,6 +25,9 @@ type Fixtures = {
   courseCategoriesLocator: CourseCategoriesLocator;
   courseCategoriesController: CourseCategoriesController;
   cleanupCategory: (name: string) => void;
+  blogCategoriesLocator: BlogCategoriesLocator;
+  blogCategoriesController: BlogCategoriesController;
+  cleanupBlogCategory: (name: string) => void;
   studentsLocator: StudentsLocator;
   studentsController: StudentsController;
   tagsLocator: TagsLocator;
@@ -74,6 +79,23 @@ export const test = base.extend<Fixtures>({
     });
     for (const name of names) {
       await courseCategoriesController.deleteIfExists(name);
+    }
+  },
+  blogCategoriesLocator: async ({ page }, use) => {
+    await use(new BlogCategoriesLocator(page));
+  },
+  blogCategoriesController: async ({ page }, use) => {
+    await use(new BlogCategoriesController(page));
+  },
+
+  /** Call `cleanupBlogCategory(name)` for every blog category a test creates (or renames to); it is deleted after the test. */
+  cleanupBlogCategory: async ({ blogCategoriesController }, use) => {
+    const names: string[] = [];
+    await use((name) => {
+      names.push(name);
+    });
+    for (const name of names) {
+      await blogCategoriesController.deleteIfExists(name);
     }
   },
   studentsLocator: async ({ page }, use) => {
