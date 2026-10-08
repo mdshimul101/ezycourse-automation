@@ -5,6 +5,9 @@ import { buildNewStudent } from '@data/students';
 // and register each email with `cleanupStudent`, so the admin session deletes it after the test.
 // No @guest tag on purpose: they run in the admin project so that cleanup can log in as admin.
 test.describe('Student signup', { tag: ['@auth', '@students'] }, () => {
+  // Same reason as students.spec.ts: signup + permanent delete is slow, and slower in parallel.
+  test.describe.configure({ mode: 'default', timeout: 90_000 });
+
   test('TC_SIGNUP_03: new student can sign up and lands on the student dashboard', async ({
     guestPage,
     guestSignupController,

@@ -1,6 +1,10 @@
 import { test, expect } from '@fixtures';
 
 test.describe('Students', { tag: ['@admin', '@students'] }, () => {
+  // Signing up and permanently deleting a student takes ~25s alone, and far longer when several
+  // workers do it at once. Run these one after another, with room for the cleanup to finish.
+  test.describe.configure({ mode: 'default', timeout: 90_000 });
+
   test('TC_STU_01: a student who signs up appears in the admin students list', async ({
     signedUpStudent,
     studentsController,

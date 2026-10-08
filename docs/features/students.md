@@ -41,6 +41,9 @@ Run: `npx playwright test --grep @students`
 - Neither "Soft Delete" nor "Permanent Delete" is pre-selected in the delete dialog.
 - The browser's "load" event on this page can take over 30 seconds (background widgets), although the page is usable after ~2 seconds.
   Controllers therefore navigate with `waitUntil: 'domcontentloaded'` and then wait for a specific element.
+- Signup + permanent delete takes ~25s per test alone and up to ~65s when several workers do it at once.
+  With the default 30s timeout the cleanup was cut off and left test students behind (found 2026-10-08).
+  Specs that create students therefore run their tests one after another with a 90s timeout.
 
 ## Not automated / risks
 
