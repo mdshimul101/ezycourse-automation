@@ -9,6 +9,7 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
+      "@configs/*": ["src/config/*"],
       "@pages/*": ["src/pages/*"],
       "@fixtures": ["src/fixtures/index.ts"],
       "@data/*": ["src/data/*"],

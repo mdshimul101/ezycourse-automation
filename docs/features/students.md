@@ -19,8 +19,8 @@ The admin sees every student of the school, can search and filter them, and can 
 
 | Scenario | Status | Test |
 |---|---|---|
-| A student who signs up appears in the admin students list | ✅ | `tests/e2e/admin/students.spec.ts` |
-| Admin can permanently delete a student | ✅ | `tests/e2e/admin/students.spec.ts` |
+| A student who signs up appears in the admin students list | ✅ | `tests/e2e/students/students.spec.ts` |
+| Admin can permanently delete a student | ✅ | `tests/e2e/students/students.spec.ts` |
 | Delete without choosing Soft/Permanent | ⬜ Planned (what does the site do?) | |
 | Soft delete, then recover the student | ⬜ Planned | |
 | Search by name / filters (product, tags, joining date) | ⬜ Planned | |
@@ -29,7 +29,7 @@ Run: `npx playwright test --grep @students`
 
 ## Test data & cleanup
 
-- The `signedUpStudent` fixture signs up a brand-new student through the real signup page (via `guestSignupPage`),
+- The `signedUpStudent` fixture signs up a brand-new student through the real signup page (via `guestSignupController`),
   in a separate logged-out browser, and **permanently deletes the student after the test, even if it failed**.
 - Verified: after 4 runs, no students created by these tests were left behind.
 - Only ever delete students whose email starts with `auto.signup` and ends with `@example.com`.
@@ -40,7 +40,7 @@ Run: `npx playwright test --grep @students`
 
 - Neither "Soft Delete" nor "Permanent Delete" is pre-selected in the delete dialog.
 - The browser's "load" event on this page can take over 30 seconds (background widgets), although the page is usable after ~2 seconds.
-  Page objects therefore navigate with `waitUntil: 'domcontentloaded'` and then wait for a specific element.
+  Controllers therefore navigate with `waitUntil: 'domcontentloaded'` and then wait for a specific element.
 
 ## Not automated / risks
 

@@ -19,9 +19,9 @@ The admin creates tags and attaches them to students, to group and filter them (
 
 | Scenario | Status | Test |
 |---|---|---|
-| Admin can create a tag | ✅ | `tests/e2e/admin/tags.spec.ts` |
-| Admin can rename a tag | ✅ | `tests/e2e/admin/tags.spec.ts` |
-| Admin can delete a tag | ✅ | `tests/e2e/admin/tags.spec.ts` |
+| Admin can create a tag | ✅ | `tests/e2e/tags/tags.spec.ts` |
+| Admin can rename a tag | ✅ | `tests/e2e/tags/tags.spec.ts` |
+| Admin can delete a tag | ✅ | `tests/e2e/tags/tags.spec.ts` |
 | Tag name is required | ⬜ Planned | |
 | Tag a student, then "View Tagged Students" shows them | ⬜ Planned (combine with `signedUpStudent`) | |
 

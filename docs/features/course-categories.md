@@ -18,9 +18,9 @@ The admin groups courses into categories (and sub-categories) so students can br
 
 | Scenario | Status | Test |
 |---|---|---|
-| Admin can create a course category | ✅ | `tests/e2e/admin/course-categories.spec.ts` |
-| Admin can rename a course category | ✅ | `tests/e2e/admin/course-categories.spec.ts` |
-| Admin can delete a course category | ✅ | `tests/e2e/admin/course-categories.spec.ts` |
+| Admin can create a course category | ✅ | `tests/e2e/course-categories/course-categories.spec.ts` |
+| Admin can rename a course category | ✅ | `tests/e2e/course-categories/course-categories.spec.ts` |
+| Admin can delete a course category | ✅ | `tests/e2e/course-categories/course-categories.spec.ts` |
 | Category name is required | ⬜ Practice task | |
 | Add / view sub-category | ⬜ Planned | |
 | Upload a category image | ⬜ Planned | |
