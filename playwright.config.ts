@@ -8,6 +8,12 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: process.env.CI ? [['github'], ['list'], ['html', { open: 'never' }]] : 'html',
 
+  // Under parallel load the admin lists can take ~9s to re-fetch after a change (seen on blog
+  // categories, 2026-10-08). Playwright's 5s default made assertions fail while the app was correct.
+  expect: { timeout: 15_000 },
+  // Single page requests to the test site sometimes take ~9s with no load at all, so 30s per test is too tight.
+  timeout: 60_000,
+
   use: {
     baseURL: globalConfig.baseUrl,
     // Record every test, keep the recording only when it fails, so a random failure always leaves evidence.
